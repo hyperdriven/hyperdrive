@@ -26,7 +26,7 @@ type Endpoint struct {
 }
 
 type GetHandler interface {
-	Get(http.ResponseWriter, *http.Request) http.HandlerFunc
+	Get(http.ResponseWriter, *http.Request)
 }
 
 type Endpointer interface {
@@ -53,6 +53,5 @@ func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
 				return
 			}
 		}
-
 	}
 }
