@@ -25,8 +25,13 @@ type Endpoint struct {
 	Path string
 }
 
+type GetHandler interface {
+	Get(http.ResponseWriter, *http.Request) http.HandlerFunc
+}
+
 type Endpointer interface {
 	GetPath() string
+	GetHandler
 }
 
 func (e *Endpoint) GetPath() string {
@@ -35,10 +40,6 @@ func (e *Endpoint) GetPath() string {
 
 func NewEndpoint(name string, desc string, path string) *Endpoint {
 	return &Endpoint{Name: name, Desc: desc, Path: path}
-}
-
-type GetHandler interface {
-	Get(http.ResponseWriter, *http.Request) http.HandlerFunc
 }
 
 func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
