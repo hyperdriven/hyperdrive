@@ -49,7 +49,7 @@ func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
 
 	if r.Method == "GET" {
 		if _, ok := interface{}(endpoint).(GetHandler); ok {
-			return endpoint.Get(rw, r)
+			return endpoint.Get
 		}
 	}
 
