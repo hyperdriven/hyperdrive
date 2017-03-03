@@ -8,11 +8,14 @@ import (
 
 type HyperdriveTestSuite struct {
 	suite.Suite
-	Endpoint hyperdrive.Endpoint
 }
 
 func (suite *HyperdriveTestSuite) TestNewAPI() {
 	suite.IsType(API{}, NewAPI(), "expects an instance of hyperdrive.API")
+}
+
+func (suite *HyperdriveTestSuite) TestNewEndpoint() {
+	suite.IsType(&Endpoint{}, NewEndpoint("Test", "Test Endpoint", "/test"), "expects an instance of hyperdrive.API")
 }
 
 func TestHyperdriveTestSuite(t *testing.T) {
