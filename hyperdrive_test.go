@@ -1,4 +1,4 @@
-package hypderdrive
+package hyperdrive
 
 import (
 	"testing"
