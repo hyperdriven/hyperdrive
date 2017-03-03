@@ -8,6 +8,7 @@ import (
 
 type HyperdriveTestSuite struct {
 	suite.Suite
+	Endpoint hyperdrive.Endpoint
 }
 
 func (suite *HyperdriveTestSuite) TestNewAPI() {
