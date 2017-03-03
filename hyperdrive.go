@@ -43,15 +43,14 @@ func NewEndpoint(name string, desc string, path string) *Endpoint {
 }
 
 func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
-	noMethod := func(rw http.ResponseWriter, r *http.Request) {
-		http.Error(rw, http.StatusText(405), 405)
-	}
-
-	if r.Method == "GET" {
-		if _, ok := interface{}(endpoint).(GetHandler); ok {
-			return endpoint.Get
+	return func(rw http.ResponseWriter, r *http.Request) {
+		if r.Method == "GET" {
+			if _, ok := interface{}(endpoint).(GetHandler); ok {
+				endpoint.Get(rw, r)
+			} else {
+				http.Error(rw, http.StatusText(405), 405)
+			}
 		}
-	}
 
-	return fn
+	}
 }
