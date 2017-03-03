@@ -1,0 +1,9 @@
+package: github.com/hyperdriven/hyperdrive
+import:
+- package: github.com/gorilla/mux
+  version: ^1.3.0
+testImport:
+- package: github.com/stretchr/testify
+  version: ^1.1.4
+  subpackages:
+  - suite

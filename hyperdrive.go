@@ -15,7 +15,7 @@ func NewAPI() API {
 	return API{Router: mux.NewRouter()}
 }
 
-func (api *API) AddEndpoint(e *Endpointer) {
+func (api *API) AddEndpoint(e Endpointer) {
 	api.Router.HandleFunc(e.GetPath(), NoMethodHandler(e))
 }
 
@@ -41,10 +41,10 @@ type GetHandler interface {
 	Get(http.ResponseWriter, *http.Request) http.HandlerFunc
 }
 
-func NoMethodHandler(endpoint *Endpointer) http.HandlerFunc {
+func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
 	fn := func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
-			if h, ok := interface{}(*endpoint).(GetHandler); ok {
+			if h, ok := interface{}(endpoint).(GetHandler); ok {
 				h.Get(rw, r)
 			} else {
 				http.Error(rw, http.StatusText(405), 405)
