@@ -45,7 +45,7 @@ func NoMethodHandler(endpoint Endpointer) http.HandlerFunc {
 	fn := func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
 			if h, ok := interface{}(endpoint).(GetHandler); ok {
-				h.Get(rw, r)
+				endpoint.Get(rw, r)
 			} else {
 				http.Error(rw, http.StatusText(405), 405)
 			}
