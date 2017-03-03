@@ -1,7 +1,6 @@
 package hyperdrive
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -38,7 +37,6 @@ func NoMethodHandler(endpoint Endpoint) http.HandlerFunc {
 	fn := func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
 			if h, ok := interface{}(endpoint).(GetHandler); ok {
-				fmt.Printf(h, ok)
 				h.Get(rw, r)
 			} else {
 				http.Error(rw, http.StatusText(405), 405)
