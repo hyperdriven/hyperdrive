@@ -15,7 +15,7 @@ func NewAPI() API {
 	return API{Router: mux.NewRouter()}
 }
 
-func (api *API) AddEndpoint(e Endpoint) {
+func (api *API) AddEndpoint(e *Endpoint) {
 	api.Router.HandleFunc(e.Path, NoMethodHandler(e))
 }
 
