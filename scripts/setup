@@ -1,7 +1,18 @@
 #!/usr/bin/env sh
-set -ex
-curl https://glide.sh/get | sh
-go get -u github.com/golang/lint/golint
-if [ "$TRAVIS" != "true" ]; then
+set -e
+
+if which glide > /dev/null; then 
+  echo "glide already installed"
+else
+  go get -v github.com/Masterminds/glide
+fi
+
+if which golint > /dev/null; then
+  echo "golint alrady installed"
+else
+  go get -u github.com/golang/lint/golint
+fi
+
+if [ "$TRAVIS" != "true"]; then
   gem install github_changelog_generator --no-ri --no-rdoc
 fi
