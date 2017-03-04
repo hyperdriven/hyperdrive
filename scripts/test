@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 set -ex
+golint
 go test $(glide novendor)
