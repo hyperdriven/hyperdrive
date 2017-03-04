@@ -12,9 +12,8 @@ OR
 
     glide get github.com/hyperdriven/hyperdrive
 
-
 ## Docs
 
-
   - [GoDoc](https://godoc.org/github.com/hyperdriven/hyperdrive)
-  - [Hyperdrive Examples](https://github.com/hyperdriven/hyperdrive-examples)
+  - [Wiki](https://github.com/hyperdriven/hyperdrive/wiki)
+  - [Examples](https://github.com/hyperdriven/hyperdrive-examples)
