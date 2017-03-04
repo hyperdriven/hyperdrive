@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 set -ex
 curl https://glide.sh/get | sh
+go get -u github.com/golang/lint/golint
