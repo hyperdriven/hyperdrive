@@ -2,3 +2,6 @@
 set -ex
 curl https://glide.sh/get | sh
 go get -u github.com/golang/lint/golint
+if [ "$TRAVIS" != "true" ]; then
+  gem install github_changelog_generator --no-ri --no-rdoc
+fi

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# This should be run on master, ensuring all upstream updates are pulled in.
+# This script will re-generate and commit the CHANGELOG.md file, tag HEAD
+# with the version you specify, push your changes and tag to origin, and
+# create a release on Github using the new tag with the message you specify.
+#
+# Example: ./scripts/release v0.0.0 "Release Notes Message ..."
+
+set -ex
+github_changelog_generator
+git commit CHANGELOG.md -am "updates changelog for ${1}"
+git tag -s ${1}
+git push --tags
+git release create ${1} -m ${2} -t master
