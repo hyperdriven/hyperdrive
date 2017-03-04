@@ -73,16 +73,20 @@ type Endpoint struct {
 	Name string
 	Desc string
 	Path string
-	//GetHandler
-	//PostHandler
-	//PutHandler
-	//PatchHandler
-	//DeleteHandler
-	//OptionsHandler
 }
 
 type Endpointer interface {
+	GetName() string
+	GetDesc() string
 	GetPath() string
+}
+
+func (e *Endpoint) GetName() string {
+	return e.Name
+}
+
+func (e *Endpoint) GetDesc() string {
+	return e.Desc
 }
 
 func (e *Endpoint) GetPath() string {
