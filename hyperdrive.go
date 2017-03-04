@@ -73,12 +73,12 @@ type Endpoint struct {
 	Name string
 	Desc string
 	Path string
-	GetHandler
-	PostHandler
-	PutHandler
-	PatchHandler
-	DeleteHandler
-	OptionsHandler
+	//GetHandler
+	//PostHandler
+	//PutHandler
+	//PatchHandler
+	//DeleteHandler
+	//OptionsHandler
 }
 
 type Endpointer interface {
