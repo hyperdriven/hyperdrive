@@ -11,8 +11,11 @@
 package hyperdrive
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
+	"github.com/caarlos0/env"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
@@ -26,6 +29,7 @@ type API struct {
 
 // NewAPI creates an instance of an API with an initialized Router.
 func NewAPI() API {
+	NewConfig()
 	return API{Router: mux.NewRouter()}
 }
 
@@ -150,4 +154,28 @@ func (e *Endpoint) GetPath() string {
 // NewEndpoint creates an instance of Endpoint.
 func NewEndpoint(name string, desc string, path string) *Endpoint {
 	return &Endpoint{EndpointName: name, EndpointDesc: desc, EndpointPath: path}
+}
+
+// Config holds configuration values from the environment, with sane defaults
+// (where possible). Required configuration will throw a Fatal error if they
+// are missing.
+type Config struct {
+	Port int    `env:"PORT" envDefault:"5000"`
+	Env  string `env:"HYPERDRIVE_ENVIRONMENT" envDefault:"development"`
+}
+
+// GetPort returns the formatted value of config.Port, for use by the
+// hyperdrive server, e.g. ":5000".
+func (c *Config) GetPort() string {
+	return fmt.Sprintf(":%d", c.Port)
+}
+
+// NewConfig returns an instance of config, with values loaded from ENV vars.
+func NewConfig() Config {
+	c := Config{}
+	err := env.Parse(&c)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return c
 }

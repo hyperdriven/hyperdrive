@@ -1,6 +1,8 @@
-hash: eb882f02511f62e7b13eb790ba12d7c79db16690d90017ec3b3e2dcbf58a3d57
-updated: 2017-03-03T17:59:26.101988064-06:00
+hash: 508e9b0af06800b503a5a78fd5830652f290132373e8e00ad0dbf736c04d3dcc
+updated: 2017-03-04T17:36:31.02597264-06:00
 imports:
+- name: github.com/caarlos0/env
+  version: d0de832ed2fbc4e7bfaa30ab5cf0b3417d15f529
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/handlers
