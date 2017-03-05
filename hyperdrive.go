@@ -71,7 +71,8 @@ func (api *API) AddEndpoint(e Endpointer) {
 		handler["OPTIONS"] = http.HandlerFunc(h.Options)
 	}
 
-	api.Router.HandleFunc(e.GetPath(), handler.ServeHTTP)
+	middleware := LoggingMiddleware(http.HandlerFunc(handler.ServeHTTP))
+	api.Router.Handle(e.GetPath(), middleware)
 }
 
 // Start starts the configured http server, listening on the configured Port
