@@ -7,7 +7,7 @@
 #
 # Example: ./scripts/release v0.0.0 "Release Notes Message ..."
 
-set -e
+set -ex
 github_changelog_generator
 git commit CHANGELOG.md -m "updates changelog for ${1}"
 git push origin master
