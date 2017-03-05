@@ -71,14 +71,14 @@ func (api *API) AddEndpoint(e Endpointer) {
 		handler["OPTIONS"] = http.HandlerFunc(h.Options)
 	}
 
-	middleware := LoggingMiddleware(http.HandlerFunc(handler.ServeHTTP))
+	middleware := api.LoggingMiddleware(api.RecoveryMiddleware(http.HandlerFunc(handler.ServeHTTP)))
 	api.Router.Handle(e.GetPath(), middleware)
 }
 
 // Start starts the configured http server, listening on the configured Port
 // (default: 5000). Set the PORT environment variable to change this.
 func (api *API) Start() {
-	log.Printf("Hyperdrive API starting on PORT %d", api.conf.Port)
+	log.Printf("Hyperdrive API starting on PORT %d in ENVIRONMENT %s", api.conf.Port, api.conf.Env)
 	log.Fatal(api.Server.ListenAndServe())
 }
 
