@@ -12,10 +12,10 @@
 
 **Merged pull requests:**
 
-- 6: adds panic recovery middleware [\#14](https://github.com/hyperdriven/hyperdrive/pull/14) ([xentek](https://github.com/xentek))
-- 7: adds request logging [\#13](https://github.com/hyperdriven/hyperdrive/pull/13) ([xentek](https://github.com/xentek))
-- 10: adds ability to configure and start a server [\#12](https://github.com/hyperdriven/hyperdrive/pull/12) ([xentek](https://github.com/xentek))
-- 9: adds configuration to Hyperdrive [\#11](https://github.com/hyperdriven/hyperdrive/pull/11) ([xentek](https://github.com/xentek))
+- adds panic recovery middleware [\#14](https://github.com/hyperdriven/hyperdrive/pull/14) ([xentek](https://github.com/xentek))
+- adds request logging [\#13](https://github.com/hyperdriven/hyperdrive/pull/13) ([xentek](https://github.com/xentek))
+- adds ability to configure and start a server [\#12](https://github.com/hyperdriven/hyperdrive/pull/12) ([xentek](https://github.com/xentek))
+- adds configuration to Hyperdrive [\#11](https://github.com/hyperdriven/hyperdrive/pull/11) ([xentek](https://github.com/xentek))
 
 ## [v0.0.1](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.1) (2017-03-04)
 
