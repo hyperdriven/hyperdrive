@@ -1,20 +1,5 @@
 # Change Log
 
-## [Unreleased](https://github.com/hyperdriven/hyperdrive/tree/HEAD)
-
-[Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.1...HEAD)
-
-**Implemented enhancements:**
-
-- Start an API Server [\#10](https://github.com/hyperdriven/hyperdrive/issues/10)
-- Configuration [\#9](https://github.com/hyperdriven/hyperdrive/issues/9)
-- Logging [\#7](https://github.com/hyperdriven/hyperdrive/issues/7)
-- Panic Recovery [\#6](https://github.com/hyperdriven/hyperdrive/issues/6)
-- 6: adds panic recovery middleware [\#14](https://github.com/hyperdriven/hyperdrive/pull/14) ([xentek](https://github.com/xentek))
-- 7: adds request logging [\#13](https://github.com/hyperdriven/hyperdrive/pull/13) ([xentek](https://github.com/xentek))
-- 10: adds ability to configure and start a server [\#12](https://github.com/hyperdriven/hyperdrive/pull/12) ([xentek](https://github.com/xentek))
-- 9: adds configuration to Hyperdrive [\#11](https://github.com/hyperdriven/hyperdrive/pull/11) ([xentek](https://github.com/xentek))
-
 ## [v0.0.1](https://github.com/hyperdriven/hyperdrive/tree/v0.0.1) (2017-03-04)
 
 
