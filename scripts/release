@@ -7,9 +7,9 @@
 #
 # Example: ./scripts/release v0.0.0 "Release Notes Message ..."
 
-set -ex
+set -e
 github_changelog_generator
-git commit CHANGELOG.md -am "updates changelog for ${1}"
-git tag -s ${1}
+git commit CHANGELOG.md -m "updates changelog for ${1}"
+git tag -s -m ${2} ${1}
 git push --tags
 git release create ${1} -m ${2} -t master
