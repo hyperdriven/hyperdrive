@@ -1,6 +1,7 @@
 package hyperdrive
 
 import (
+	"net/http"
 	"os"
 	"testing"
 
@@ -18,6 +19,10 @@ func (suite *HyperdriveTestSuite) SetupTest() {
 
 func (suite *HyperdriveTestSuite) TestNewAPI() {
 	suite.IsType(API{}, NewAPI(), "expects an instance of hyperdrive.API")
+}
+
+func (suite *HyperdriveTestSuite) TestAPIServer() {
+	suite.IsType(&http.Server{}, NewAPI().Server, "expects an instance of *http.Server")
 }
 
 func (suite *HyperdriveTestSuite) TestNewEndpoint() {
