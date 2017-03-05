@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/caarlos0/env"
 	"github.com/gorilla/handlers"
@@ -24,13 +25,21 @@ import (
 // to the response handlers using a gorlla mux Router.
 type API struct {
 	Router    *mux.Router
+	Server    *http.Server
+	conf      Config
 	endpoints []Endpoint
 }
 
 // NewAPI creates an instance of an API with an initialized Router.
 func NewAPI() API {
-	NewConfig()
-	return API{Router: mux.NewRouter()}
+	api := API{Router: mux.NewRouter(), conf: NewConfig()}
+	api.Server = &http.Server{
+		Handler:      api.Router,
+		Addr:         api.conf.GetPort(),
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	return api
 }
 
 // AddEndpoint registers endpoints, ensuring that endpoints automatically
@@ -63,6 +72,13 @@ func (api *API) AddEndpoint(e Endpointer) {
 	}
 
 	api.Router.HandleFunc(e.GetPath(), handler.ServeHTTP)
+}
+
+// Start starts the configured http server, listening on the configured Port
+// (default: 5000). Set the PORT environment variable to change this.
+func (api *API) Start() {
+	log.Printf("Hyperdrive API starting on PORT %d", api.conf.Port)
+	log.Fatal(api.Server.ListenAndServe())
 }
 
 // GetHandler interface is satisfied if the endpoint has implemented
