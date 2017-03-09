@@ -5,22 +5,31 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
 // API is a logical collection of one or more endpoints, connecting requests
 // to the response handlers using a gorlla mux Router.
 type API struct {
+	Name      string
+	Desc      string
 	Router    *mux.Router
 	Server    *http.Server
+	Root      *RootResource
 	conf      Config
 	endpoints []Endpoint
 }
 
-// NewAPI creates an instance of an API with an initialized Router.
-func NewAPI() API {
-	api := API{Router: mux.NewRouter(), conf: NewConfig()}
+// NewAPI creates an instance of API, with an initialized Router, Config, Server, and RootResource.
+func NewAPI(name string, desc string) API {
+	api := API{
+		Name:   name,
+		Desc:   desc,
+		Router: mux.NewRouter(),
+		conf:   NewConfig(),
+	}
+	api.Root = NewRootResource(api)
+	api.Router.Handle("/", api.DefaultMiddlewareChain(api.Root)).Methods("GET")
 	api.Server = &http.Server{
 		Handler:      api.Router,
 		Addr:         api.conf.GetPort(),
@@ -34,33 +43,8 @@ func NewAPI() API {
 // respond with a 405 error if the endpoint does not support a particular
 // HTTP method.
 func (api *API) AddEndpoint(e Endpointer) {
-	handler := make(handlers.MethodHandler)
-	if h, ok := interface{}(e).(GetHandler); ok {
-		handler["GET"] = http.HandlerFunc(h.Get)
-	}
-
-	if h, ok := interface{}(e).(PostHandler); ok {
-		handler["POST"] = http.HandlerFunc(h.Post)
-	}
-
-	if h, ok := interface{}(e).(PutHandler); ok {
-		handler["PUT"] = http.HandlerFunc(h.Put)
-	}
-
-	if h, ok := interface{}(e).(PatchHandler); ok {
-		handler["PATCH"] = http.HandlerFunc(h.Patch)
-	}
-
-	if h, ok := interface{}(e).(DeleteHandler); ok {
-		handler["DELETE"] = http.HandlerFunc(h.Delete)
-	}
-
-	if h, ok := interface{}(e).(OptionsHandler); ok {
-		handler["OPTIONS"] = http.HandlerFunc(h.Options)
-	}
-
-	middleware := api.LoggingMiddleware(api.RecoveryMiddleware(http.HandlerFunc(handler.ServeHTTP)))
-	api.Router.Handle(e.GetPath(), middleware)
+	api.Root.AddEndpointer(e)
+	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e)))
 }
 
 // Start starts the configured http server, listening on the configured Port
