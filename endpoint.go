@@ -1,6 +1,11 @@
 package hyperdrive
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+
+	"github.com/gorilla/handlers"
+)
 
 // GetHandler interface is satisfied if the endpoint has implemented
 // a http.Handler method called Get(). If this is not implemented,
@@ -52,7 +57,8 @@ type OptionsHandler interface {
 }
 
 // Endpointer interface provides flexibility in how endpoints are created
-// allowing for expressiveness how developers make use of this package.
+// allowing for expressiveness in how developers make use of the hyperdrive
+// package.
 type Endpointer interface {
 	GetName() string
 	GetDesc() string
@@ -91,4 +97,67 @@ func (e *Endpoint) GetPath() string {
 // NewEndpoint creates an instance of Endpoint.
 func NewEndpoint(name string, desc string, path string) *Endpoint {
 	return &Endpoint{EndpointName: name, EndpointDesc: desc, EndpointPath: path}
+}
+
+// GetMethods returns a slice of the methods an Endpoint supports.
+func GetMethods(e Endpointer) []string {
+	var methods = []string{"OPTIONS"}
+
+	if _, ok := interface{}(e).(GetHandler); ok {
+		methods = append(methods, "GET")
+	}
+
+	if _, ok := interface{}(e).(PostHandler); ok {
+		methods = append(methods, "POST")
+	}
+
+	if _, ok := interface{}(e).(PutHandler); ok {
+		methods = append(methods, "PUT")
+	}
+
+	if _, ok := interface{}(e).(PatchHandler); ok {
+		methods = append(methods, "PATCH")
+	}
+
+	if _, ok := interface{}(e).(DeleteHandler); ok {
+		methods = append(methods, "DELETE")
+	}
+
+	return methods
+}
+
+// GetMethodsList returns a list of the methods an Endpoint supports.
+func GetMethodsList(e Endpointer) string {
+	return strings.Join(GetMethods(e), ", ")
+}
+
+// NewMethodHandler sets the correct http.Handler for each method, depending on
+// the interfaces the Enpointer supports. It returns an http.HandlerFunc, ready
+// to be served directly, wrapped in other middleware, etc.
+func NewMethodHandler(e Endpointer) http.HandlerFunc {
+	handler := make(handlers.MethodHandler)
+	if h, ok := interface{}(e).(GetHandler); ok {
+		handler["GET"] = http.HandlerFunc(h.Get)
+	}
+
+	if h, ok := interface{}(e).(PostHandler); ok {
+		handler["POST"] = http.HandlerFunc(h.Post)
+	}
+
+	if h, ok := interface{}(e).(PutHandler); ok {
+		handler["PUT"] = http.HandlerFunc(h.Put)
+	}
+
+	if h, ok := interface{}(e).(PatchHandler); ok {
+		handler["PATCH"] = http.HandlerFunc(h.Patch)
+	}
+
+	if h, ok := interface{}(e).(DeleteHandler); ok {
+		handler["DELETE"] = http.HandlerFunc(h.Delete)
+	}
+
+	if h, ok := interface{}(e).(OptionsHandler); ok {
+		handler["OPTIONS"] = http.HandlerFunc(h.Options)
+	}
+	return http.HandlerFunc(handler.ServeHTTP)
 }

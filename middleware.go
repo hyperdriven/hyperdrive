@@ -7,6 +7,12 @@ import (
 	"github.com/gorilla/handlers"
 )
 
+// DefaultMiddlewareChain wraps the given http.Handler in the following chain
+// of middleware: LoggingMiddleware, RecoveryMiddleware.
+func (api *API) DefaultMiddlewareChain(h http.Handler) http.Handler {
+	return api.LoggingMiddleware(api.RecoveryMiddleware(h))
+}
+
 // LoggingMiddleware wraps the given http.Handler and outputs requests in Apache-style
 // Combined Log format. All logging is done to STDOUT only.
 func (api *API) LoggingMiddleware(h http.Handler) http.Handler {
