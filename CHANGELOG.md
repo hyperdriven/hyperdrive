@@ -1,5 +1,23 @@
 # Change Log
 
+## [v0.0.3](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.3) (2017-03-10)
+[Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.2...v0.0.3)
+
+**Implemented enhancements:**
+
+- Accept-Encoding [\#8](https://github.com/hyperdriven/hyperdrive/issues/8) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- X-HTTP-Method-Override [\#5](https://github.com/hyperdriven/hyperdrive/issues/5) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- CORS [\#4](https://github.com/hyperdriven/hyperdrive/issues/4) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Discovery URL [\#1](https://github.com/hyperdriven/hyperdrive/issues/1) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+
+**Merged pull requests:**
+
+- adds support for X-HTTP-Method-Override header [\#19](https://github.com/hyperdriven/hyperdrive/pull/19) ([xentek](https://github.com/xentek))
+- adds CORS request support [\#20](https://github.com/hyperdriven/hyperdrive/pull/20) ([xentek](https://github.com/xentek))
+- adds support for GZip compression, via Accept-Encoding header [\#18](https://github.com/hyperdriven/hyperdrive/pull/18) ([xentek](https://github.com/xentek))
+- adds automatic discovery url at API root [\#16](https://github.com/hyperdriven/hyperdrive/pull/16) ([xentek](https://github.com/xentek))
+- adds Code of conduct [\#15](https://github.com/hyperdriven/hyperdrive/pull/15) ([xentek](https://github.com/xentek))
+
 ## [v0.0.2](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.2) (2017-03-05)
 [Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.1...v0.0.2)
 
