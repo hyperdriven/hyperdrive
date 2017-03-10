@@ -28,7 +28,18 @@ func (suite *HyperdriveTestSuite) TestEnvConfigFromDefault() {
 }
 
 func (suite *HyperdriveTestSuite) TestEnvConfigFromEnv() {
-	os.Setenv("HYPERDRIVE_ENVIRONMENT", "test")
+	os.Setenv("HYPERDRIVE_ENV", "test")
 	c := NewConfig()
-	suite.Equal("test", c.Env, "Env should be equal to HYPERDRIVE_ENVIRONMENT value set via ENV var")
+	suite.Equal("test", c.Env, "Env should be equal to HYPERDRIVE_ENV value set via ENV var")
+}
+
+func (suite *HyperdriveTestSuite) TestGzipLevelConfigFromDefault() {
+	c := NewConfig()
+	suite.Equal(-1, c.GzipLevel, "GzipLevel should be equal to default value")
+}
+
+func (suite *HyperdriveTestSuite) TestGzipLevelConfigFromEnv() {
+	os.Setenv("GZIP_LEVEL", "9")
+	c := NewConfig()
+	suite.Equal(9, c.GzipLevel, "GzipLevel should be equal to GZIP_LEVEL value set via ENV var")
 }
