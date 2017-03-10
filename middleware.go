@@ -3,6 +3,7 @@ package hyperdrive
 import (
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gorilla/handlers"
 )
@@ -10,7 +11,7 @@ import (
 // DefaultMiddlewareChain wraps the given http.Handler in the following chain
 // of middleware: LoggingMiddleware, RecoveryMiddleware.
 func (api *API) DefaultMiddlewareChain(h http.Handler) http.Handler {
-	return api.CompressionMiddleware(api.LoggingMiddleware(api.RecoveryMiddleware(h)))
+	return api.CorsMiddleware(api.CompressionMiddleware(api.LoggingMiddleware(api.RecoveryMiddleware(h))))
 }
 
 // LoggingMiddleware wraps the given http.Handler and outputs requests in Apache-style
@@ -54,4 +55,23 @@ func (api *API) CompressionMiddleware(h http.Handler) http.Handler {
 // header. The header name is case sensitive.
 func (api *API) MethodOverrideMiddleware(h http.Handler) http.Handler {
 	return handlers.HTTPMethodOverrideHandler(h)
+}
+
+// CorsMiddleware allows cross-origin HTTP requests to your API. The middleware is enabled
+// by default, and can be configured via the following environment variables:
+//
+// - CORS_ENABLED (bool)
+// - CORS_ORIGINS (string)
+// - CORS_HEADERS (string)
+// - CORS_CREDENTIALS (bool)
+func (api *API) CorsMiddleware(h http.Handler) http.Handler {
+	if api.conf.CorsEnabled == true {
+		return h
+	}
+	headers := handlers.AllowedHeaders(append([]string{"Content-Type"}, strings.Split(api.conf.CorsHeaders, ",")...))
+	origins := handlers.AllowedOrigins(strings.Split(api.conf.CorsOrigins, ","))
+	if api.conf.CorsCredentials == true {
+		handlers.AllowCredentials()
+	}
+	return handlers.CORS(headers, origins)(h)
 }
