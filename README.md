@@ -20,7 +20,7 @@ Configuration of core features are done via Environment Variables, in accordence
   - `PORT`: (default: `5000`, type: `int`) The port the server should listen on.
   - `GZIP_LEVEL`: (default: `-1`, type: `int`) Accepts a value between `-2` and `9`. Invalid values will be silently discarded and the default of `-1` will be used. More info on compression levels can be found in the docs, but corresponds to `zlib` compression levels.
   - `CORS_ENABLED`: (default: `true`, type: `bool`) Set this to `false` to disable CORS support.
-  - `CORS_HEADERS`: (default: ``, type: `string`) A comma-seperated list of headers to allow and expose during CORS requests. These will be appended to the default set of headers that are always allowed: `Accept`, `Accept-Language`, `Content-Language`, and `Content-Type`.
+  - `CORS_HEADERS`: (type: `string`) A comma-seperated list of headers to allow and expose during CORS requests. These will be appended to the default set of headers that are always allowed: `Accept`, `Accept-Language`, `Content-Language`, and `Content-Type`.
   - `CORS_ORIGINS`: (default: `*`, type: `string`) A comma-seperated list of origins to allow during CORS requests. These will replace the default value, which is to allow all origins.
   - `CORS_CREDENTIALS`: (default: `true`, type: `bool`) Set this to `false` to disable authenticated CORS requests.
 
