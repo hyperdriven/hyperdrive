@@ -12,6 +12,14 @@ OR
 
     glide get github.com/hyperdriven/hyperdrive
 
+## Config
+
+Configuration of core features are done via Environment Variables, in accordence with [12 factor](https://12factor.net/config) principles.
+
+- `HYPERDRIVE_ENV`: (default: `development`, type: `string`) The stage in your deployment pipeline the api is currently running in. A value of `production` changes behviour for some features (such as whether stack traces are logged during panic recovery). Other values, such as `staging`, can be used but currently have no meanin in the framework other than the one you give it in your own code.
+- `PORT` - (default: `5000`, type: `int`) The port the server should listen on.
+- `GZIP_LEVEL` - (default: `-1`, type: `int`) Accepts a value between `-2` and `9`. Invalid values will be silently discarded and the default of `-1` will be used. More info on compression levels can be found in the docs, but corresponds to `zlib` compression levels.
+
 ## Docs
 
   - [GoDoc](https://godoc.org/github.com/hyperdriven/hyperdrive)

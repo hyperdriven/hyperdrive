@@ -13,3 +13,7 @@ func (suite *HyperdriveTestSuite) TestLoggingMiddleware() {
 func (suite *HyperdriveTestSuite) TestRecoveryMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.RecoveryMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
+
+func (suite *HyperdriveTestSuite) TestCompressionMiddleware() {
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.CompressionMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+}
