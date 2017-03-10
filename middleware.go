@@ -48,3 +48,10 @@ func (api *API) RecoveryMiddleware(h http.Handler) http.Handler {
 func (api *API) CompressionMiddleware(h http.Handler) http.Handler {
 	return handlers.CompressHandlerLevel(h, api.conf.GzipLevel)
 }
+
+// MethodOverrideMiddleware allows clients who can not perform native PUT, PATCH,
+// or DELETE requests to specify the HTTP method in the X-HTTP-Method-Override
+// header. The header name is case sensitive.
+func (api *API) MethodOverrideMiddleware(h http.Handler) http.Handler {
+	return handlers.HTTPMethodOverrideHandler(h)
+}

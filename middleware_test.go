@@ -17,3 +17,7 @@ func (suite *HyperdriveTestSuite) TestRecoveryMiddleware() {
 func (suite *HyperdriveTestSuite) TestCompressionMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.CompressionMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
+
+func (suite *HyperdriveTestSuite) TestMethodOverrideMiddleware() {
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.MethodOverrideMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+}
