@@ -21,3 +21,7 @@ func (suite *HyperdriveTestSuite) TestCompressionMiddleware() {
 func (suite *HyperdriveTestSuite) TestMethodOverrideMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.MethodOverrideMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
+
+func (suite *HyperdriveTestSuite) TestCorsMiddleware() {
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.CorsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+}
