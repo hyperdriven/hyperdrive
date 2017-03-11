@@ -25,7 +25,7 @@ func (api *API) LoggingMiddleware(h http.Handler) http.Handler {
 // RecoveryMiddleware wraps the given http.Handler and recovers from panics. It wil log
 // the stacktrace if HYPERDRIVE_ENVIRONMENT env var is not set to "production".
 func (api *API) RecoveryMiddleware(h http.Handler) http.Handler {
-	opt := handlers.PrintRecoveryStack(api.conf.Env != "production")
+	opt := handlers.PrintRecoveryStack(conf.Env != "production")
 	return handlers.RecoveryHandler(opt)(h)
 }
 
@@ -49,7 +49,7 @@ func (api *API) RecoveryMiddleware(h http.Handler) http.Handler {
 // More info can be found in the docs for the compress/flate package:
 // https://golang.org/pkg/compress/flate/
 func (api *API) CompressionMiddleware(h http.Handler) http.Handler {
-	return handlers.CompressHandlerLevel(h, api.conf.GzipLevel)
+	return handlers.CompressHandlerLevel(h, conf.GzipLevel)
 }
 
 // MethodOverrideMiddleware allows clients who can not perform native PUT, PATCH,
@@ -67,13 +67,13 @@ func (api *API) MethodOverrideMiddleware(h http.Handler) http.Handler {
 // - CORS_HEADERS (string)
 // - CORS_CREDENTIALS (bool)
 func (api *API) CorsMiddleware(h http.Handler) http.Handler {
-	if api.conf.CorsEnabled == true {
+	if conf.CorsEnabled == true {
 		return h
 	}
 	defaultHeaders := []string{"Content-Type", "X-Content-Type-Options"}
-	headers := handlers.AllowedHeaders(append(defaultHeaders, strings.Split(api.conf.CorsHeaders, ",")...))
-	origins := handlers.AllowedOrigins(strings.Split(api.conf.CorsOrigins, ","))
-	if api.conf.CorsCredentials == true {
+	headers := handlers.AllowedHeaders(append(defaultHeaders, strings.Split(conf.CorsHeaders, ",")...))
+	origins := handlers.AllowedOrigins(strings.Split(conf.CorsOrigins, ","))
+	if conf.CorsCredentials == true {
 		handlers.AllowCredentials()
 	}
 	return handlers.CORS(headers, origins)(h)

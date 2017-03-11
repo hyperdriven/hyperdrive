@@ -163,9 +163,9 @@ func GetMethodsList(e Endpointer) string {
 }
 
 // NewMethodHandler sets the correct http.Handler for each method, depending on
-// the interfaces the Enpointer supports. It returns an http.HandlerFunc, ready
+// the interfaces the Enpointer supports. It returns an http.Handler, ready
 // to be served directly, wrapped in other middleware, etc.
-func NewMethodHandler(e Endpointer) http.HandlerFunc {
+func NewMethodHandler(e Endpointer) http.Handler {
 	handler := make(handlers.MethodHandler)
 	if h, ok := interface{}(e).(GetHandler); ok {
 		handler["GET"] = http.HandlerFunc(h.Get)
@@ -190,5 +190,23 @@ func NewMethodHandler(e Endpointer) http.HandlerFunc {
 	if h, ok := interface{}(e).(OptionsHandler); ok {
 		handler["OPTIONS"] = http.HandlerFunc(h.Options)
 	}
-	return http.HandlerFunc(handler.ServeHTTP)
+	return handler
+}
+
+// Respond is a helper function to make it easy for an Endpointer's method
+// handler (e.g. GetHandler) to respond with the appropriate Content-Type.
+func Respond(rw http.ResponseWriter, r *http.Request, status int, body interface{}, headers ...http.Header) (http.ResponseWriter, *http.Request) {
+	var enc ContentEncoder
+	enc, rw = GetEncoder(rw, r.Header.Get("Accept"))
+	err := enc.Encode(body)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusNotAcceptable)
+		// TODO: Add LOGGING
+		return rw, r
+	}
+	rw.WriteHeader(status)
+	for _, header := range headers {
+		header.Write(rw)
+	}
+	return rw, r
 }

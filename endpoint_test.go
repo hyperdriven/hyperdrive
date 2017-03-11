@@ -1,5 +1,7 @@
 package hyperdrive
 
+import "net/http"
+
 func (suite *HyperdriveTestSuite) TestNewEndpoint() {
 	suite.IsType(&Endpoint{}, suite.TestEndpoint, "expects an instance of hyperdrive.Endpoint")
 }
@@ -30,4 +32,8 @@ func (suite *HyperdriveTestSuite) TestGetMethods() {
 
 func (suite *HyperdriveTestSuite) TestGetMethodsList() {
 	suite.Equal("OPTIONS", GetMethodsList(suite.TestEndpoint), "expects a list of supported method strings")
+}
+
+func (suite *HyperdriveTestSuite) TestNewMethodHandler() {
+	suite.Implements((*http.Handler)(nil), NewMethodHandler(suite.TestEndpoint), "return an implementation of http.Handler")
 }

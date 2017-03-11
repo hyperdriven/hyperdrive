@@ -9,12 +9,11 @@ import (
 
 type HyperdriveTestSuite struct {
 	suite.Suite
-	TestAPI                    API
-	TestEndpoint               Endpointer
-	TestHandler                http.Handler
-	TestRoot                   *RootResource
-	TestRootRepresentation     Representation
-	TestEndpointRepresentation Representation
+	TestAPI              API
+	TestEndpoint         Endpointer
+	TestHandler          http.Handler
+	TestRoot             *RootResource
+	TestEndpointResource EndpointResource
 }
 
 func (suite *HyperdriveTestSuite) SetupTest() {
@@ -22,8 +21,7 @@ func (suite *HyperdriveTestSuite) SetupTest() {
 	suite.TestEndpoint = NewEndpoint("Test", "Test Endpoint", "/test", "1.0.1")
 	suite.TestHandler = NewMethodHandler(suite.TestEndpoint)
 	suite.TestRoot = NewRootResource(suite.TestAPI)
-	suite.TestEndpointRepresentation = Representation{"name": "Test", "desc": "Test Endpoint", "path": "/test", "methods": []string{"OPTIONS"}}
-	suite.TestRootRepresentation = Representation{"resource": "api", "name": "API", "endpoints": []Representation{suite.TestEndpointRepresentation}}
+	suite.TestEndpointResource = NewEndpointResource(suite.TestEndpoint)
 }
 
 func (suite *HyperdriveTestSuite) TestNewAPI() {

@@ -19,7 +19,6 @@ type API struct {
 	Router    *mux.Router
 	Server    *http.Server
 	Root      *RootResource
-	conf      Config
 	endpoints []Endpoint
 }
 
@@ -29,13 +28,12 @@ func NewAPI(name string, desc string) API {
 		Name:   name,
 		Desc:   desc,
 		Router: mux.NewRouter(),
-		conf:   NewConfig(),
 	}
 	api.Root = NewRootResource(api)
 	api.Router.Handle("/", api.DefaultMiddlewareChain(api.Root)).Methods("GET")
 	api.Server = &http.Server{
 		Handler:      api.Router,
-		Addr:         api.conf.GetPort(),
+		Addr:         conf.GetPort(),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
@@ -46,7 +44,7 @@ func NewAPI(name string, desc string) API {
 // respond with a 405 error if the endpoint does not support a particular
 // HTTP method.
 func (api *API) AddEndpoint(e Endpointer) {
-	api.Root.AddEndpointer(e)
+	api.Root.AddEndpoint(e)
 	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e)))
 }
 
@@ -63,7 +61,7 @@ func (api *API) GetMediaType(e Endpointer) string {
 // Start starts the configured http server, listening on the configured Port
 // (default: 5000). Set the PORT environment variable to change this.
 func (api *API) Start() {
-	log.Printf("Hyperdrive API starting on PORT %d in ENVIRONMENT %s", api.conf.Port, api.conf.Env)
+	log.Printf("Hyperdriven API: %s starting on: http://0.0.0.0:%d in: %s", api.Name, conf.Port, conf.Env)
 	log.Fatal(api.Server.ListenAndServe())
 }
 
