@@ -45,7 +45,9 @@ func NewAPI(name string, desc string) API {
 // HTTP method.
 func (api *API) AddEndpoint(e Endpointer) {
 	api.Root.AddEndpoint(e)
-	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e)))
+	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e))).
+		Headers("Accept", api.GetContentTypeJSON(e)).
+		Headers("Accet", api.GetContentTypeXML(e))
 }
 
 // GetMediaType returns a media type string, sans any content-type extension (e.g. json),
@@ -56,6 +58,27 @@ func (api *API) AddEndpoint(e Endpointer) {
 // Content-Type response header.
 func (api *API) GetMediaType(e Endpointer) string {
 	return fmt.Sprintf("application/vnd.%s.%s.%s", slug(api.Name), slug(e.GetName()), e.GetVersion())
+}
+
+// GetContentTypeJSON returns the json Content-Type an endpoint can accept and
+// respond with. The Content-Type will include the versioned vendor Media
+// Type returned by API.GetMediaType() with a json extension.
+func (api *API) GetContentTypeJSON(e Endpointer) string {
+	return fmt.Sprintf("%s.json", api.GetMediaType(e))
+}
+
+// GetContentTypeXML returns the xml Content-Type an endpoint can accept and
+// respond with. The Content-Type will include the versioned vendor Media
+// Type returned by API.GetMediaType() with an xml extension.
+func (api *API) GetContentTypeXML(e Endpointer) string {
+	return fmt.Sprintf("%s.xml", api.GetMediaType(e))
+}
+
+// GetContentTypes returns a slice of Content-Types the endpoint can accept and
+// respond with. The Content-Types will include both the versioned vendor Media
+// Type returned by API.GetMediaType() for both json and xml.
+func (api *API) GetContentTypes(e Endpointer) []string {
+	return []string{api.GetContentTypeJSON(e), api.GetContentTypeXML(e)}
 }
 
 // Start starts the configured http server, listening on the configured Port
