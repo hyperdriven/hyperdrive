@@ -1,5 +1,5 @@
-hash: 508e9b0af06800b503a5a78fd5830652f290132373e8e00ad0dbf736c04d3dcc
-updated: 2017-03-04T17:36:31.02597264-06:00
+hash: 7bf3b501233a2729c72609562a733518952e95ed73780b2bb20d56c2e7b60d89
+updated: 2017-03-10T17:45:56.469489343-06:00
 imports:
 - name: github.com/caarlos0/env
   version: d0de832ed2fbc4e7bfaa30ab5cf0b3417d15f529
@@ -9,9 +9,11 @@ imports:
   version: 3a5767ca75ece5f7f1440b1d16975247f8d8b221
 - name: github.com/gorilla/mux
   version: 392c28fe23e1c45ddba891b0320b3b5df220beea
+- name: github.com/Masterminds/semver
+  version: 59c29afe1a994eacb71c833025ca7acf874bb1da
 testImports:
 - name: github.com/davecgh/go-spew
-  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  version: 04cdfd42973bb9c8589fd6a731800cf222fde1a9
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib
