@@ -1,11 +1,14 @@
 package hyperdrive
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
+	slugify "github.com/metal3d/go-slugify"
 )
 
 // API is a logical collection of one or more endpoints, connecting requests
@@ -47,9 +50,23 @@ func (api *API) AddEndpoint(e Endpointer) {
 	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e)))
 }
 
+// GetMediaType returns a media type string, sans any content-type extension (e.g. json),
+// based on the name of the API, the Endpoint, and the Endpoint's version. The Media Type
+// produced will be used for Content Negotiation, via the Accept header, as well as routing
+// to the appropriate endpoint, when the media type appears in the request headers (e.g.
+// Accept and Content-Type). It will also be used, after content negotation in the
+// Content-Type response header.
+func (api *API) GetMediaType(e Endpointer) string {
+	return fmt.Sprintf("application/vnd.%s.%s.%s", slug(api.Name), slug(e.GetName()), e.GetVersion())
+}
+
 // Start starts the configured http server, listening on the configured Port
 // (default: 5000). Set the PORT environment variable to change this.
 func (api *API) Start() {
 	log.Printf("Hyperdrive API starting on PORT %d in ENVIRONMENT %s", api.conf.Port, api.conf.Env)
 	log.Fatal(api.Server.ListenAndServe())
+}
+
+func slug(s string) string {
+	return strings.ToLower(slugify.Marshal(s))
 }
