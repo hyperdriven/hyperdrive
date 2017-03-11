@@ -7,6 +7,12 @@ import (
 	"github.com/caarlos0/env"
 )
 
+var conf Config
+
+func init() {
+	conf = NewConfig()
+}
+
 // Config holds configuration values from the environment, with sane defaults
 // (where possible). Required configuration will throw a Fatal error if they
 // are missing.

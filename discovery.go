@@ -1,7 +1,7 @@
 package hyperdrive
 
 import (
-	"encoding/json"
+	"encoding/xml"
 	"net/http"
 )
 
@@ -14,51 +14,42 @@ type Representation map[string]interface{}
 // the hypermedia respresentation returned by the Discovery URL endpoint for
 // API clients to learn about the API.
 type RootResource struct {
-	Name      string
-	Endpoints []Endpointer
+	XMLName   xml.Name           `json:"-" xml:"api"`
+	Resource  string             `json:"resource" xml:"-"`
+	Name      string             `json:"name" xml:"name,attr"`
+	Endpoints []EndpointResource `json:"endpoints" xml:"endpoints"`
 }
 
-// NewRootResource creates an instance of RootResource, based on the given API.
+// EndpointResource contains information about and Endpoint, and is
+// the hypermedia respresentation returned by the Discovery URL endpoint for
+// API clients to learn about the Endpoint.
+type EndpointResource struct {
+	XMLName     xml.Name `json:"-" xml:"endpoint"`
+	Resource    string   `json:"resource" xml:"-"`
+	Name        string   `json:"name" xml:"name,attr"`
+	Path        string   `json:"path" xml:"path,attr"`
+	MethodsList string   `json:"-" xml:"methods,attr"`
+	Methods     []string `json:"methods" xml:"-"`
+	Desc        string   `json:"description" xml:"description"`
+}
+
+// NewRootResource creates an instance of RootResource from the given API.
 func NewRootResource(api API) *RootResource {
-	return &RootResource{Name: api.Name}
+	return &RootResource{Resource: "api", Name: api.Name}
 }
 
-// AddEndpointer adds Endpointers to the slice of Endpointers on an instance of RootResource.
-func (root *RootResource) AddEndpointer(e Endpointer) {
-	root.Endpoints = append(root.Endpoints, e)
+// NewEndpointResource creates an instance of EndpointResource from the given Endpointer.
+func NewEndpointResource(e Endpointer) EndpointResource {
+	return EndpointResource{Resource: "endpoint", Name: e.GetName(), Path: e.GetPath(), MethodsList: GetMethodsList(e), Methods: GetMethods(e), Desc: e.GetDesc()}
 }
 
-// Present returns an Representation of the RootResource to describe the API
-// for the Discovery URL.
-func (root *RootResource) Present() Representation {
-	return Representation{
-		"resource":  "api",
-		"name":      root.Name,
-		"endpoints": root.endpointRepresentations(),
-	}
-}
-
-func (root *RootResource) endpointRepresentations() []Representation {
-	var endpoints = []Representation{}
-	for _, e := range root.Endpoints {
-		endpoints = append(endpoints, PresentEndpoint(e))
-	}
-	return endpoints
-}
-
-// PresentEndpoint returns a Representation to describe an Endpoint for the Discovery URL.
-func PresentEndpoint(e Endpointer) Representation {
-	return Representation{
-		"name":    e.GetName(),
-		"desc":    e.GetDesc(),
-		"path":    e.GetPath(),
-		"methods": GetMethods(e),
-	}
+// AddEndpoint adds EndpointResources to the slice of Endpoints on an instance of RootResource.
+func (root *RootResource) AddEndpoint(e Endpointer) {
+	root.Endpoints = append(root.Endpoints, NewEndpointResource(e))
 }
 
 // ServeHTTP satisfies the http.Handler interface and returns the hypermedia
 // representation of the Discovery URL.
 func (root *RootResource) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(rw).Encode(root.Present())
+	Respond(rw, r, 200, root)
 }
