@@ -16,6 +16,10 @@ func (suite *HyperdriveTestSuite) TestGetPath() {
 	suite.Equal("/test", suite.TestEndpoint.GetPath(), "expects GetPath() to return Path")
 }
 
+func (suite *HyperdriveTestSuite) TestGetVersion() {
+	suite.Equal("v1.0.1", suite.TestEndpoint.GetVersion(), "expects GetVersion() to return Version")
+}
+
 func (suite *HyperdriveTestSuite) TestEndpointer() {
 	suite.Implements((*Endpointer)(nil), suite.TestEndpoint, "expects an implementation of hyperdrive.Endpointer interface")
 }

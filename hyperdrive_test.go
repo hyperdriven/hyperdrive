@@ -19,7 +19,7 @@ type HyperdriveTestSuite struct {
 
 func (suite *HyperdriveTestSuite) SetupTest() {
 	suite.TestAPI = NewAPI("Test API", "Test API Desc")
-	suite.TestEndpoint = NewEndpoint("Test", "Test Endpoint", "/test")
+	suite.TestEndpoint = NewEndpoint("Test", "Test Endpoint", "/test", "1.0.1")
 	suite.TestHandler = NewMethodHandler(suite.TestEndpoint)
 	suite.TestRoot = NewRootResource(suite.TestAPI)
 	suite.TestEndpointRepresentation = Representation{"name": "Test", "desc": "Test Endpoint", "path": "/test", "methods": []string{"OPTIONS"}}

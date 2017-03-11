@@ -1,9 +1,11 @@
 package hyperdrive
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
+	"github.com/Masterminds/semver"
 	"github.com/gorilla/handlers"
 )
 
@@ -63,14 +65,16 @@ type Endpointer interface {
 	GetName() string
 	GetDesc() string
 	GetPath() string
+	GetVersion() string
 }
 
 // Endpoint is a basic implementation of the Endpointer interface and
 // can be used directly if desired.
 type Endpoint struct {
-	EndpointName string
-	EndpointDesc string
-	EndpointPath string
+	EndpointName    string
+	EndpointDesc    string
+	EndpointPath    string
+	EndpointVersion *semver.Version
 }
 
 // GetName satisfies part of the Endpointer interface and returns a
@@ -94,9 +98,36 @@ func (e *Endpoint) GetPath() string {
 	return e.EndpointPath
 }
 
+// GetVersion returns a string representing the version.
+func (e *Endpoint) GetVersion() string {
+	var v = fmt.Sprintf("v%d", e.EndpointVersion.Major())
+
+	if (e.EndpointVersion.Major() >= 0 && e.EndpointVersion.Minor() != 0) || (e.EndpointVersion.Major() >= 0 && e.EndpointVersion.Patch() > 0) {
+		v = fmt.Sprintf("%s%s%d", v, ".", e.EndpointVersion.Minor())
+	}
+
+	if e.EndpointVersion.Patch() != 0 {
+		v = fmt.Sprintf("%s%s%d", v, ".", e.EndpointVersion.Patch())
+	}
+
+	if e.EndpointVersion.Prerelease() != "" {
+		v = fmt.Sprintf("%s%s%s", v, "-", e.EndpointVersion.Prerelease())
+	}
+
+	return v
+}
+
 // NewEndpoint creates an instance of Endpoint.
-func NewEndpoint(name string, desc string, path string) *Endpoint {
-	return &Endpoint{EndpointName: name, EndpointDesc: desc, EndpointPath: path}
+func NewEndpoint(name string, desc string, path string, version string) *Endpoint {
+	var (
+		v   *semver.Version
+		err error
+	)
+	v, err = semver.NewVersion(version)
+	if err != nil {
+		v, _ = semver.NewVersion("1")
+	}
+	return &Endpoint{EndpointName: name, EndpointDesc: desc, EndpointPath: path, EndpointVersion: v}
 }
 
 // GetMethods returns a slice of the methods an Endpoint supports.
