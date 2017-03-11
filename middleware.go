@@ -9,9 +9,11 @@ import (
 )
 
 // DefaultMiddlewareChain wraps the given http.Handler in the following chain
-// of middleware: LoggingMiddleware, RecoveryMiddleware.
+// of middleware: CorsMiddleware, FrameOptionsMiddleware,
+// ContentTypeOptionsMiddleware, CompressionMiddleware, LoggingMiddleware,
+// RecoveryMiddleware.
 func (api *API) DefaultMiddlewareChain(h http.Handler) http.Handler {
-	return api.CorsMiddleware(api.CompressionMiddleware(api.LoggingMiddleware(api.RecoveryMiddleware(h))))
+	return api.CorsMiddleware(api.FrameOptionsMiddleware(api.ContentTypeOptionsMiddleware(api.CompressionMiddleware(api.LoggingMiddleware(api.RecoveryMiddleware(h))))))
 }
 
 // LoggingMiddleware wraps the given http.Handler and outputs requests in Apache-style
@@ -68,10 +70,27 @@ func (api *API) CorsMiddleware(h http.Handler) http.Handler {
 	if api.conf.CorsEnabled == true {
 		return h
 	}
-	headers := handlers.AllowedHeaders(append([]string{"Content-Type"}, strings.Split(api.conf.CorsHeaders, ",")...))
+	defaultHeaders := []string{"Content-Type", "X-Content-Type-Options"}
+	headers := handlers.AllowedHeaders(append(defaultHeaders, strings.Split(api.conf.CorsHeaders, ",")...))
 	origins := handlers.AllowedOrigins(strings.Split(api.conf.CorsOrigins, ","))
 	if api.conf.CorsCredentials == true {
 		handlers.AllowCredentials()
 	}
 	return handlers.CORS(headers, origins)(h)
+}
+
+// ContentTypeOptionsMiddleware adds X-Content-Type-Options header set to nosniff to every response.
+func (api *API) ContentTypeOptionsMiddleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Header().Set("X-Content-Type-Options", "nosniff")
+		h.ServeHTTP(rw, r)
+	})
+}
+
+// FrameOptionsMiddleware adds X-Frame-Options header set to nosniff to every response.
+func (api *API) FrameOptionsMiddleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Header().Set("X-Frame-Options", "DENY")
+		h.ServeHTTP(rw, r)
+	})
 }

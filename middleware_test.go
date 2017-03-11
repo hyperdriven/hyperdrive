@@ -25,3 +25,11 @@ func (suite *HyperdriveTestSuite) TestMethodOverrideMiddleware() {
 func (suite *HyperdriveTestSuite) TestCorsMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.CorsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
+
+func (suite *HyperdriveTestSuite) TestContentTypeOptionsMiddleware() {
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.ContentTypeOptionsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+}
+
+func (suite *HyperdriveTestSuite) TestFrameOptionsMiddleware() {
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.FrameOptionsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+}
