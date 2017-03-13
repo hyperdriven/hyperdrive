@@ -32,10 +32,6 @@ func (suite *HyperdriveTestSuite) TestAPIServer() {
 	suite.IsType(&http.Server{}, suite.TestAPI.Server, "expects an instance of *http.Server")
 }
 
-func (suite *HyperdriveTestSuite) TestGetMediaType() {
-	suite.Equal("application/vnd.api.test.v1.0.1", suite.TestAPI.GetMediaType(suite.TestEndpoint), "returns a media type string")
-}
-
 func TestHyperdriveTestSuite(t *testing.T) {
 	suite.Run(t, new(HyperdriveTestSuite))
 }
