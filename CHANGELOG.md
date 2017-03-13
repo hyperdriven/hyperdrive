@@ -1,5 +1,33 @@
 # Change Log
 
+## [v0.0.4](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.4) (2017-03-13)
+[Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.3...v0.0.4)
+
+**Implemented enhancements:**
+
+- Media Type Versioning [\#27](https://github.com/hyperdriven/hyperdrive/issues/27) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- X-Content-Type-Options [\#23](https://github.com/hyperdriven/hyperdrive/issues/23) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Media Types [\#21](https://github.com/hyperdriven/hyperdrive/issues/21) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Content Negotiation [\#17](https://github.com/hyperdriven/hyperdrive/issues/17) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Endpoint Version [\#2](https://github.com/hyperdriven/hyperdrive/issues/2) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+
+**Fixed bugs:**
+
+- Discovery URL should include accepted media type information [\#30](https://github.com/hyperdriven/hyperdrive/issues/30) [[bug](https://github.com/hyperdriven/hyperdrive/labels/bug)]
+
+**Closed issues:**
+
+- X-Frame-Options [\#24](https://github.com/hyperdriven/hyperdrive/issues/24)
+
+**Merged pull requests:**
+
+- clean up media types [\#31](https://github.com/hyperdriven/hyperdrive/pull/31) ([xentek](https://github.com/xentek))
+- routes requests to an endpoint with Accept header [\#29](https://github.com/hyperdriven/hyperdrive/pull/29) ([xentek](https://github.com/xentek))
+- implements automatic Content Negotiation [\#28](https://github.com/hyperdriven/hyperdrive/pull/28) ([xentek](https://github.com/xentek))
+- supports X-Content-Type-Options, X-Frame-Options [\#26](https://github.com/hyperdriven/hyperdrive/pull/26) ([xentek](https://github.com/xentek))
+- generates automatic Media Types for an endpoint [\#25](https://github.com/hyperdriven/hyperdrive/pull/25) ([xentek](https://github.com/xentek))
+- adds Endpoint Verison [\#22](https://github.com/hyperdriven/hyperdrive/pull/22) ([xentek](https://github.com/xentek))
+
 ## [v0.0.3](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.3) (2017-03-10)
 [Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.2...v0.0.3)
 
