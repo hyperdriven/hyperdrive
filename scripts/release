@@ -13,4 +13,7 @@ git push --tags
 github_changelog_generator --issue-line-labels="ALL" --release-url="https://github.com/hyperdriven/hyperdrive/releases/tag/%s"
 git commit CHANGELOG.md -m "updates changelog for ${1}"
 git push origin master
-hub release create -m "${1}\n\n${2}" ${1}
+rm -f .git/RELEASE_EDITMSG
+touch .git/RELEASE_EDITMSG
+echo "${1}\n\n${2}" >> .git/RELEASE_EDITMSG
+hub release create -f .git/RELEASE_EDITMSG ${1}
