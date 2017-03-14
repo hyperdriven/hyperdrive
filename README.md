@@ -1,4 +1,4 @@
-# hyperdrive [![Build Status](https://travis-ci.org/hyperdriven/hyperdrive.svg?branch=master)](https://travis-ci.org/hyperdriven/hyperdrive) [![GoDoc](https://godoc.org/github.com/hyperdriven/hyperdrive?status.svg)](https://godoc.org/github.com/hyperdriven/hyperdrive)
+# hyperdrive [![Build Status](https://travis-ci.org/hyperdriven/hyperdrive.svg?branch=master)](https://travis-ci.org/hyperdriven/hyperdrive) [![GoDoc](https://godoc.org/github.com/hyperdriven/hyperdrive?status.svg)](https://godoc.org/github.com/hyperdriven/hyperdrive) [![Slack Group](https://slack.hyperdriven.net/badge.svg)](https://slack.hyperdriven.net)
 
 An opinionated micro-framework for creating Hypermedia APIs in Go.
 
