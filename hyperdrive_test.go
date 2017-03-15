@@ -2,6 +2,7 @@ package hyperdrive
 
 import (
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -14,6 +15,7 @@ type HyperdriveTestSuite struct {
 	TestHandler          http.Handler
 	TestRoot             *RootResource
 	TestEndpointResource EndpointResource
+	TestGetRequest       *http.Request
 }
 
 func (suite *HyperdriveTestSuite) SetupTest() {
@@ -22,6 +24,7 @@ func (suite *HyperdriveTestSuite) SetupTest() {
 	suite.TestHandler = NewMethodHandler(suite.TestEndpoint)
 	suite.TestRoot = NewRootResource(suite.TestAPI)
 	suite.TestEndpointResource = NewEndpointResource(suite.TestEndpoint)
+	suite.TestGetRequest = httptest.NewRequest("GET", "/test/2?id=1&a=b", nil)
 }
 
 func (suite *HyperdriveTestSuite) TestNewAPI() {
