@@ -49,13 +49,10 @@ func NewAPI(name string, desc string) API {
 // HTTP method.
 func (api *API) AddEndpoint(e Endpointer) {
 	api.Root.AddEndpoint(e)
-	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e))).
-		Headers("Accept", GetContentTypeJSON(*api, e)).
-		Headers("Accet", GetContentTypeXML(*api, e))
+	api.Router.Handle(e.GetPath(), api.DefaultMiddlewareChain(NewMethodHandler(e))).HeadersRegexp("Accept", GetMediaType(*api, e)+"(json|xml)")
 	log.Printf("Added hyperdriven Endpoint: %s http://0.0.0.0:%d%s", e.GetName(), conf.Port, e.GetPath())
 	log.Printf("    Methods: %s", GetMethodsList(e))
 	log.Printf("    Media Types: %s", GetContentTypesList(*api, e))
-
 }
 
 // Start starts the configured http server, listening on the configured Port
