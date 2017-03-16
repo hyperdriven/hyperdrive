@@ -10,7 +10,11 @@ import (
 var conf Config
 
 func init() {
-	conf = NewConfig()
+	var err error
+	conf, err = NewConfig()
+	if err != nil {
+		log.Fatalf("Config could not be initalized: %v", err)
+	}
 }
 
 // Config holds configuration values from the environment, with sane defaults
@@ -33,11 +37,8 @@ func (c *Config) GetPort() string {
 }
 
 // NewConfig returns an instance of config, with values loaded from ENV vars.
-func NewConfig() Config {
+func NewConfig() (Config, error) {
 	c := Config{}
 	err := env.Parse(&c)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return c
+	return c, err
 }

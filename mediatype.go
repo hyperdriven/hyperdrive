@@ -9,7 +9,7 @@ import (
 // based on the name of the API, the Endpoint, and the Endpoint's version. The Media Type
 // produced will be used for Content Negotiation, via the Accept header, as well as routing
 // to the appropriate endpoint, when the media type appears in the request headers (e.g.
-// Accept and Content-Type). It will also be used, after content negotation in the
+// Accept and Content-Type). It will also be used, after content negotiation in the
 // Content-Type response header.
 func GetMediaType(api API, e Endpointer) string {
 	return fmt.Sprintf("application/vnd.%s.%s.%s", slug(api.Name), slug(e.GetName()), e.GetVersion())

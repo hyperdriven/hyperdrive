@@ -3,9 +3,13 @@ language: go
 go:
 - 1.7
 - 1.8
-before_install: "./scripts/setup"
+before_install:
+- "./scripts/setup"
+- go get github.com/mattn/goveralls
 install: "./scripts/install"
-script: "./scripts/test"
+script:
+- "./scripts/test"
+- "${HOME}/gopath/bin/goveralls -service=travis-ci"
 notifications:
   email:
     on_success: never
@@ -13,4 +17,5 @@ notifications:
   slack:
     on_success: change
     on_failure: always
-    secure: g00PDFgbvdPk+c9++R8iO5NGpyfk/T40PVDL7xS0q49kNv+/SPbnEyd0xjShKxyr7K7ucQgdSAOhBKtOkHy3zQmMZb5ZxJkQkfsSur+KJ1cTW3fCvCOXj/nlqeErjpTmoMBv5Q8Sj3vtjrF7P/7C8kAuqz3unScbvcj58PclNbAwpCCLVhvSl/MykQMMETL3+tQ+KG1Ngna/1QiWk41fB4w/KnNdY9Bf1aI5XYNYVX7AOJubqplHUcHy6Js4Pnosbu/bq5pIsxLcv1/OYwzlIZuMo+bVE59DODLZX/PLxaJUNGoip/rKOHHtWrNwSkHBgkv3NOlzQaMfysxZ9I2IJPKkG4Z8xjNAEv5yY9DuwkoyVOXGDWMIW7/8UeuI0iUoBhE6dZ2PrDUkClOEwu0NS4W3UX2fwXmZpv8S2iMLvsrWDzhV5iiFSnIQPBAUteq8jn22hQ6opqbDIRIXpB0NBnaovlIa0vNztgmF5PPgnZXR0RkRRe9lOkAWOqP1Xe1QWjc6stSDDRa3buV3VjeCZHh7nQhl4uFBNb6OMBlAxMKGQGv3dgYW1xD7v74V5PF1OhgM+LwAaic3Il00pfQU7HIAhRjk9eg4qLt1tioLq2k9lsQKSz0TWqsFVUnv+BoC/f6EZQltcTFiHjrLBhhMfUOb/wyn6+mOnzHWUoHMkN8=
+    rooms:
+      secure: KPVEWDHePYbCaXwtCtPvLMmpkqRuuqt9D94QS1HN9qk2jYenk0URCtVyTIQPB4kdy7F16IendhB1vEAiOrB9bcs0EM20ciN+MCeOWyDK6ARqdkXFBSzsigQQuHbbe7Um65aHd3usOojD4qpq2E7bzxD21udWDZk/ylD/vOeQ6gJYYaCj6dyEtLS4l228dDBHhOCeSTT3QMljE9aXdM6r/CitDrZkHIsVVBGkEmq2VfNlkyO7IXLs2nYpj1imSpGlpYaZ6ZpkZVlr2cKMZVP2PYShKv94Hpce1Yx4dUmt9UpEGCOrYN4QFgGUq2VHWen++mDTawLo/4Rc+dkPOI/TxwAbCQoR5aNdUuHoQimCIcfJBn73aEar9ZrE+eR4gR0lQEjYvHAvMGJao/7F9rGtRdC871pcuilDOMKYrpgw3JsmDS/cRu5MIavQT0TVG0lC+eMYNiLv5S6d6WAo6mYiZkw6qUeOiFzH04pIkDlQJ2o8WO0Ac8ArNxt1ddsECPjbiaKpAbnx1eIBS9THX3lwsYAW4gCX5W8brsJP4exLtpMuPrxWkR0u0I8cQiI1jzENr/H9oepA3k0/5hC5IQA6QLepFEs4hlh1KBXbqHc90soQchwvgl3ljfd0oyLz8c7C/hkcBiCJ2q68vj9I5mfzxTHsUCW3xQKw/q1CM+/zu3Q=

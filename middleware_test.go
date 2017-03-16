@@ -26,6 +26,12 @@ func (suite *HyperdriveTestSuite) TestCorsMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.CorsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
 
+func (suite *HyperdriveTestSuite) TestCorsMiddlewareDisabled() {
+	conf.CorsEnabled = false
+	suite.Implements((*http.Handler)(nil), suite.TestAPI.CorsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
+	conf.CorsEnabled = true
+}
+
 func (suite *HyperdriveTestSuite) TestContentTypeOptionsMiddleware() {
 	suite.Implements((*http.Handler)(nil), suite.TestAPI.ContentTypeOptionsMiddleware(suite.TestHandler), "return an implementation of http.Handler")
 }
