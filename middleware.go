@@ -40,7 +40,7 @@ func (api *API) RecoveryMiddleware(h http.Handler) http.Handler {
 // -1 is the Default Compression level, and is also used if an invalid value is
 // configured via GZIP_LEVEL.
 //
-// 0 attemps no compression, and only adds the necessary DEFLATE framing.
+// 0 attempts no compression, and only adds the necessary DEFLATE framing.
 //
 // -2 disables Lempel-Ziv match searching and only performs Huffman entropy
 // encoding. This is useful when compressing data that has already been compressed

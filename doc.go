@@ -1,6 +1,6 @@
 // Package hyperdrive is an opinonated micro-framework for writing hypermedia
 // APIs. It attempts to embrace the best of Hypermedia, especially
-// the seperation of client and server, encapsulated in the
+// the separation of client and server, encapsulated in the
 // principle of HATEOAS (HTTP as the Engine of Application State).
 //
 // Hyperdrive APIs are resource-oriented, make heavy use of

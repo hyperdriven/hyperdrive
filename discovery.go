@@ -7,7 +7,7 @@ import (
 
 // Representation is a data structure representing the response output. The
 // representation is used when automatically encoding responses based on the
-// Content Type determined by content negotation.
+// Content Type determined by content negotiation.
 type Representation map[string]interface{}
 
 // RootResource contains information about the API and its Endpoints, and is

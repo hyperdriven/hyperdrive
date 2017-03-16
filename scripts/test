@@ -2,4 +2,4 @@
 
 set -e
 golint -set_exit_status
-go test $(glide novendor)
+go test -covermode=count -coverprofile=profile.cov $(glide nv)
