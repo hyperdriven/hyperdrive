@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -e
+
+go version
+if which glide > /dev/null; then
+  glide -v
+else
+  echo "glide not installed"
+fi
