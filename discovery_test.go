@@ -1,6 +1,9 @@
 package hyperdrive
 
-import "net/http"
+import (
+	"net/http"
+	"net/http/httptest"
+)
 
 func (suite *HyperdriveTestSuite) TestNewRootResource() {
 	suite.IsType(&RootResource{}, suite.TestRoot, "expects an instance of RootResource")
@@ -17,4 +20,12 @@ func (suite *HyperdriveTestSuite) TestAddEndpointer() {
 
 func (suite *HyperdriveTestSuite) TestRootResourceServeHTTP() {
 	suite.Implements((*http.Handler)(nil), suite.TestRoot, "return an implementation of http.Handler")
+}
+
+func (suite *HyperdriveTestSuite) TestRootResourceRequest() {
+	rw := httptest.NewRecorder()
+	r := httptest.NewRequest("GET", "/", nil)
+	r.Header.Add("Accept", "application/json")
+	suite.TestRoot.ServeHTTP(rw, r)
+	suite.Equal(200, rw.Result().StatusCode, "expects request to discovery url to be successful")
 }

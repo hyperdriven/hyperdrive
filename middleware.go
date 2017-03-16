@@ -67,7 +67,7 @@ func (api *API) MethodOverrideMiddleware(h http.Handler) http.Handler {
 // - CORS_HEADERS (string)
 // - CORS_CREDENTIALS (bool)
 func (api *API) CorsMiddleware(h http.Handler) http.Handler {
-	if conf.CorsEnabled == true {
+	if conf.CorsEnabled != true {
 		return h
 	}
 	defaultHeaders := []string{"Content-Type", "X-Content-Type-Options"}

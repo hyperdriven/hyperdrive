@@ -6,6 +6,11 @@ func (suite *HyperdriveTestSuite) TestNewEndpoint() {
 	suite.IsType(&Endpoint{}, suite.TestEndpoint, "expects an instance of hyperdrive.Endpoint")
 }
 
+func (suite *HyperdriveTestSuite) TestNewEndpointDefaultVersion() {
+	e := NewEndpoint("Test", "Test Endpoint", "/test", "notsemver")
+	suite.Equal("v1", e.GetVersion(), "expects an instance of hyperdrive.Endpoint")
+}
+
 func (suite *HyperdriveTestSuite) TestGetName() {
 	suite.Equal("Test", suite.TestEndpoint.GetName(), "expects GetName() to return Name")
 }
@@ -19,7 +24,7 @@ func (suite *HyperdriveTestSuite) TestGetPath() {
 }
 
 func (suite *HyperdriveTestSuite) TestGetVersion() {
-	suite.Equal("v1.0.1", suite.TestEndpoint.GetVersion(), "expects GetVersion() to return Version")
+	suite.Equal("v1.0.1-beta", suite.TestEndpoint.GetVersion(), "expects GetVersion() to return Version")
 }
 
 func (suite *HyperdriveTestSuite) TestEndpointer() {
