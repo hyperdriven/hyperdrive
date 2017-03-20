@@ -1,5 +1,5 @@
-hash: 74a8b2717375531d919d594c0868c2490810ffb111600bb28124e4880e9164c5
-updated: 2017-03-10T18:37:33.280466765-06:00
+hash: e402503411faae1d2a4013574093ed6bead247cea2ad860d966c8511004d0d9f
+updated: 2017-03-20T15:54:53.297458528-05:00
 imports:
 - name: github.com/caarlos0/env
   version: d0de832ed2fbc4e7bfaa30ab5cf0b3417d15f529
@@ -13,9 +13,11 @@ imports:
   version: 59c29afe1a994eacb71c833025ca7acf874bb1da
 - name: github.com/metal3d/go-slugify
   version: 7ac2014b2f23e254684c08d597496681d12c6a8a
+- name: github.com/xtgo/set
+  version: 4431f6b51265b1e0b76af4dafc09d6f12c2bdcd0
 testImports:
 - name: github.com/davecgh/go-spew
-  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  version: 04cdfd42973bb9c8589fd6a731800cf222fde1a9
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib
