@@ -1,7 +1,6 @@
 package hyperdrive
 
 import (
-	"log"
 	"reflect"
 	"strings"
 
@@ -28,6 +27,28 @@ func (p parsedParam) IsRequired(method string) bool {
 	return contains(p.Required, method)
 }
 
+type parsedParams map[string]parsedParam
+
+func (pp parsedParams) Allowed(method string) []string {
+	var allowed []string
+	for _, p := range pp {
+		if p.IsAllowed(method) {
+			allowed = append(allowed, p.Key)
+		}
+	}
+	return allowed
+}
+
+func (pp parsedParams) Required(method string) []string {
+	var required []string
+	for _, p := range pp {
+		if p.IsRequired(method) {
+			required = append(required, p.Key)
+		}
+	}
+	return required
+}
+
 func contains(haystack []string, needle string) bool {
 	for _, m := range haystack {
 		if m == needle {
@@ -37,9 +58,9 @@ func contains(haystack []string, needle string) bool {
 	return false
 }
 
-func parse(e Endpointer) map[string]parsedParam {
-	var params = map[string]parsedParam{}
-	t := reflect.TypeOf(e)
+func parseEndpoint(e Endpointer) parsedParams {
+	var params = parsedParams{}
+	t := reflect.TypeOf(e).Elem()
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		if _, ok := field.Tag.Lookup(tagName); ok {
@@ -67,16 +88,12 @@ func parseField(field reflect.StructField) parsedParam {
 	for _, tag := range tags {
 		pairs := strings.Split(tag, "=")
 		k, v := pairs[0], pairs[1]
-		log.Printf("k=%v,v=%v", k, v)
 		switch k {
 		case "a":
-			log.Printf("av=%v", v)
 			if v != "" {
 				allowed = strings.Split(v, ",")
 			}
-			log.Printf("allowed=%v", allowed)
 		case "r":
-			log.Printf("rv=%v", v)
 			if v != "" {
 				required = strings.Split(v, ",")
 				allowed = set.Strings(allowed)

@@ -66,3 +66,15 @@ func (suite *HyperdriveTestSuite) TestParamsNonGetValues() {
 	}))
 	suite.TestAPI.Router.ServeHTTP(httptest.NewRecorder(), suite.TestPostRequest)
 }
+
+func (suite *HyperdriveTestSuite) TestGetParams() {
+	params, err := GetParams(suite.TestTaggedEndpoint, suite.TestGetRequest)
+	suite.Equal(url.Values{"id": []string{"1"}}, params, "returns populated url.Values")
+	suite.Nil(err, "returns populated url.Values")
+}
+
+func (suite *HyperdriveTestSuite) TestGetParamsError() {
+	params, err := GetParams(suite.TestTaggedEndpoint, suite.TestGetRequestNoParams)
+	suite.Equal(url.Values{}, params, "returns populated url.Values")
+	suite.Error(err, "returns populated url.Values")
+}

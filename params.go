@@ -1,6 +1,8 @@
 package hyperdrive
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 
@@ -56,4 +58,25 @@ func Params(r *http.Request) url.Values {
 	}
 
 	return params
+}
+
+// GetParams returns all allowed request params. It returns an error on
+// the first required param is not present. GetParams is intended to be used
+// in your method handlers in a given endpoint.
+func GetParams(e Endpointer, r *http.Request) (url.Values, error) {
+	pp := parseEndpoint(e)
+	p := Params(r)
+	for k := range p {
+		log.Println("k=%v,contains=%v", k, pp.Allowed(r.Method))
+		if contains(pp.Allowed(r.Method), k) != true {
+			p.Del(k)
+		}
+	}
+
+	for _, required := range pp.Required(r.Method) {
+		if k, ok := p[required]; !ok {
+			return p, fmt.Errorf("Missing required parameter: %s", k)
+		}
+	}
+	return p, nil
 }
