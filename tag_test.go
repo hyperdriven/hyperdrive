@@ -29,21 +29,21 @@ func (suite *HyperdriveTestSuite) TestContainsFalse() {
 }
 
 func (suite *HyperdriveTestSuite) TestParse() {
-	suite.IsType(map[string]parsedParam{}, parse(suite.TestTaggedStruct), "expects it to return a map of parsedParams")
+	suite.IsType(parsedParams{}, parseEndpoint(suite.TestTaggedStruct), "expects it to return a map of parsedParams")
 }
 
 func (suite *HyperdriveTestSuite) TestParseTestParam() {
-	suite.Equal(suite.TestParsedParamMap["test_param"], parse(suite.TestTaggedStruct)["test_param"], "expects it to return the correct parsedParam")
+	suite.Equal(suite.TestParsedParamMap["test_param"], parseEndpoint(suite.TestTaggedStruct)["test_param"], "expects it to return the correct parsedParam")
 }
 
 func (suite *HyperdriveTestSuite) TestParseTestParamDefault() {
-	suite.Equal(suite.TestParsedParamMap["test_param_default"], parse(suite.TestTaggedStruct)["test_param_default"], "expects it to return the correct parsedParam")
+	suite.Equal(suite.TestParsedParamMap["test_param_default"], parseEndpoint(suite.TestTaggedStruct)["test_param_default"], "expects it to return the correct parsedParam")
 }
 
 func (suite *HyperdriveTestSuite) TestParseTestParamEmpty() {
-	suite.Equal(suite.TestParsedParamMap["TestParamEmpty"], parse(suite.TestTaggedStruct)["TestParamEmpty"], "expects it to return the correct parsedParam")
+	suite.Equal(suite.TestParsedParamMap["TestParamEmpty"], parseEndpoint(suite.TestTaggedStruct)["TestParamEmpty"], "expects it to return the correct parsedParam")
 }
 
 func (suite *HyperdriveTestSuite) TestParseTestParamRequired() {
-	suite.Equal(suite.TestParsedParamMap["test_param_required"], parse(suite.TestTaggedStruct)["test_param_required"], "expects it to return the correct parsedParam")
+	suite.Equal(suite.TestParsedParamMap["test_param_required"], parseEndpoint(suite.TestTaggedStruct)["test_param_required"], "expects it to return the correct parsedParam")
 }
