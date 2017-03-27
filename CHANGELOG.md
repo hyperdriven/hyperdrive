@@ -1,5 +1,31 @@
 # Change Log
 
+## [v0.0.5](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.5) (2017-03-27)
+[Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.4...v0.0.5)
+
+**Implemented enhancements:**
+
+- Struct Tags for Params [\#49](https://github.com/hyperdriven/hyperdrive/issues/49) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Bind Params to a given Endpoint [\#44](https://github.com/hyperdriven/hyperdrive/issues/44) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Custom Types for Params [\#43](https://github.com/hyperdriven/hyperdrive/issues/43) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Allowed / Required Params [\#42](https://github.com/hyperdriven/hyperdrive/issues/42) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Parsing Params [\#41](https://github.com/hyperdriven/hyperdrive/issues/41) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+- Params [\#3](https://github.com/hyperdriven/hyperdrive/issues/3) [[enhancement](https://github.com/hyperdriven/hyperdrive/labels/enhancement)]
+
+**Fixed bugs:**
+
+- Clean up content-type enforcement [\#40](https://github.com/hyperdriven/hyperdrive/issues/40) [[bug](https://github.com/hyperdriven/hyperdrive/labels/bug)]
+
+**Merged pull requests:**
+
+- adds support for self-describing Parameters [\#52](https://github.com/hyperdriven/hyperdrive/pull/52) ([xentek](https://github.com/xentek))
+- adds support for parsing allowed/required params [\#51](https://github.com/hyperdriven/hyperdrive/pull/51) ([xentek](https://github.com/xentek))
+- adds `param` struct tag [\#50](https://github.com/hyperdriven/hyperdrive/pull/50) ([xentek](https://github.com/xentek))
+- adds code quality indicators [\#48](https://github.com/hyperdriven/hyperdrive/pull/48) ([xentek](https://github.com/xentek))
+- optimize Accept header matching for endpoints [\#47](https://github.com/hyperdriven/hyperdrive/pull/47) ([xentek](https://github.com/xentek))
+- adds CONTRIBUTING guide [\#46](https://github.com/hyperdriven/hyperdrive/pull/46) ([xentek](https://github.com/xentek))
+- adds methods to parse params [\#45](https://github.com/hyperdriven/hyperdrive/pull/45) ([xentek](https://github.com/xentek))
+
 ## [v0.0.4](https://github.com/hyperdriven/hyperdrive/releases/tag/v0.0.4) (2017-03-13)
 [Full Changelog](https://github.com/hyperdriven/hyperdrive/compare/v0.0.3...v0.0.4)
 
