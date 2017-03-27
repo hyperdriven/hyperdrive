@@ -2,7 +2,6 @@ package hyperdrive
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -67,7 +66,6 @@ func GetParams(e Endpointer, r *http.Request) (url.Values, error) {
 	pp := parseEndpoint(e)
 	p := Params(r)
 	for k := range p {
-		log.Println("k=%v,contains=%v", k, pp.Allowed(r.Method))
 		if contains(pp.Allowed(r.Method), k) != true {
 			p.Del(k)
 		}
@@ -79,4 +77,12 @@ func GetParams(e Endpointer, r *http.Request) (url.Values, error) {
 		}
 	}
 	return p, nil
+}
+
+// Parameter is an interface to allow users to create self-describing custom types
+// to be used as endpoint params. The name and description are reusable
+// across multiple endpoints.
+type Parameter interface {
+	GetName() string
+	GetDesc() string
 }

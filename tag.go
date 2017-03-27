@@ -12,6 +12,8 @@ const (
 )
 
 type parsedParam struct {
+	Name     string
+	Desc     string
 	Field    string
 	Type     string
 	Key      string
@@ -23,8 +25,16 @@ func (p parsedParam) IsAllowed(method string) bool {
 	return contains(p.Allowed, method)
 }
 
+func (p parsedParam) AllowedList() string {
+	return strings.Join(p.Allowed, ",")
+}
+
 func (p parsedParam) IsRequired(method string) bool {
 	return contains(p.Required, method)
+}
+
+func (p parsedParam) RequiredList() string {
+	return strings.Join(p.Required, ",")
 }
 
 type parsedParams map[string]parsedParam
@@ -78,6 +88,7 @@ func parseField(field reflect.StructField) parsedParam {
 		allowed  = []string{"GET", "POST", "PUT", "PATCH"}
 		required = []string{}
 	)
+
 	t := field.Tag.Get(tagName)
 	tags = strings.Split(t, ";")
 	key, tags = tags[0], tags[1:]
@@ -103,5 +114,22 @@ func parseField(field reflect.StructField) parsedParam {
 	required = set.Strings(required)
 	allowed = append(allowed, required...)
 	allowed = set.Strings(allowed)
-	return parsedParam{field.Name, field.Type.Name(), key, allowed, required}
+	name, desc := fieldNameAndDesc(field)
+	return parsedParam{name, desc, field.Name, field.Type.Name(), key, allowed, required}
+}
+
+func fieldNameAndDesc(field reflect.StructField) (string, string) {
+	var name = field.Name
+	var desc = "..."
+	in := []reflect.Value{reflect.New(field.Type)}
+
+	if gname, ok := reflect.PtrTo(field.Type).MethodByName("GetName"); ok {
+		name = gname.Func.Call(in)[0].String()
+	}
+
+	if gdesc, ok := reflect.PtrTo(field.Type).MethodByName("GetDesc"); ok {
+		desc = gdesc.Func.Call(in)[0].String()
+	}
+
+	return name, desc
 }

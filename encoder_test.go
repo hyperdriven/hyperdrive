@@ -28,7 +28,15 @@ func (suite *HyperdriveTestSuite) TestJSONEncoderEncode() {
 	rw := httptest.NewRecorder()
 	enc := JSONEncoder{Encoder: json.NewEncoder(rw)}
 	enc.Encode(suite.TestEndpointResource)
-	json := `{"resource":"endpoint","name":"Test","path":"/test","methods":["OPTIONS"],"media-types":["application/vnd.api.test.v1.0.1-beta.json","application/vnd.api.test.v1.0.1-beta.xml"],"description":"Test Endpoint"}` + "\n"
+	json := `{"resource":"endpoint","name":"Test","path":"/test","methods":["OPTIONS"],"media-types":["application/vnd.api.test.v1.0.1-beta.json","application/vnd.api.test.v1.0.1-beta.xml"],"description":"Test Endpoint","params":[]}` + "\n"
+	suite.Equal(json, rw.Body.String(), "returns nil")
+}
+
+func (suite *HyperdriveTestSuite) TestJSONEncoderEncodeParams() {
+	rw := httptest.NewRecorder()
+	enc := JSONEncoder{Encoder: json.NewEncoder(rw)}
+	enc.Encode(suite.TestEndpointResourceCustom)
+	json := `{"resource":"endpoint","name":"Test","path":"/test","methods":["OPTIONS"],"media-types":["application/vnd.api.test.v1.0.1-beta.json","application/vnd.api.test.v1.0.1-beta.xml"],"description":"Test Endpoint","params":[{"name":"ID","description":"The unique identifer for this resource.","allowed":["GET","PATCH","POST","PUT"],"required":["GET"]}]}` + "\n"
 	suite.Equal(json, rw.Body.String(), "returns nil")
 }
 
@@ -46,7 +54,15 @@ func (suite *HyperdriveTestSuite) TestXMLEncoderEncode() {
 	rw := httptest.NewRecorder()
 	enc := XMLEncoder{Encoder: xml.NewEncoder(rw)}
 	enc.Encode(suite.TestEndpointResource)
-	xml := `<endpoint name="Test" path="/test" methods="OPTIONS" media-types="application/vnd.api.test.v1.0.1-beta.json,application/vnd.api.test.v1.0.1-beta.xml"><description>Test Endpoint</description></endpoint>`
+	xml := `<endpoint name="Test" path="/test" methods="OPTIONS" media-types="application/vnd.api.test.v1.0.1-beta.json,application/vnd.api.test.v1.0.1-beta.xml"><description>Test Endpoint</description><params></params></endpoint>`
+	suite.Equal(xml, rw.Body.String(), "returns nil")
+}
+
+func (suite *HyperdriveTestSuite) TestXMLEncoderEncodeParams() {
+	rw := httptest.NewRecorder()
+	enc := XMLEncoder{Encoder: xml.NewEncoder(rw)}
+	enc.Encode(suite.TestEndpointResourceCustom)
+	xml := `<endpoint name="Test" path="/test" methods="OPTIONS" media-types="application/vnd.api.test.v1.0.1-beta.json,application/vnd.api.test.v1.0.1-beta.xml"><description>Test Endpoint</description><params><param name="ID" allowed="GET,PATCH,POST,PUT" required="GET"><description>The unique identifer for this resource.</description></param></params></endpoint>`
 	suite.Equal(xml, rw.Body.String(), "returns nil")
 }
 
