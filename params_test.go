@@ -78,3 +78,7 @@ func (suite *HyperdriveTestSuite) TestGetParamsError() {
 	suite.Equal(url.Values{}, params, "returns populated url.Values")
 	suite.Error(err, "returns populated url.Values")
 }
+
+func (suite *HyperdriveTestSuite) TestParameter() {
+	suite.Implements((*Parameter)(nil), new(ID), "is an implementation of Parameter")
+}

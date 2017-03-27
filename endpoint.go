@@ -163,7 +163,7 @@ func GetMethodsList(e Endpointer) string {
 }
 
 // NewMethodHandler sets the correct http.Handler for each method, depending on
-// the interfaces the Enpointer supports. It returns an http.Handler, ready
+// the interfaces the Endpointer supports. It returns an http.Handler, ready
 // to be served directly, wrapped in other middleware, etc.
 func NewMethodHandler(e Endpointer) http.Handler {
 	handler := make(handlers.MethodHandler)

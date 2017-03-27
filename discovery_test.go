@@ -18,6 +18,14 @@ func (suite *HyperdriveTestSuite) TestAddEndpointer() {
 	suite.Equal(1, len(suite.TestRoot.Endpoints), "expects 1 Endpoints")
 }
 
+func (suite *HyperdriveTestSuite) TestNewEndpointResource() {
+	suite.Equal(suite.TestEndpointResourceCustom, NewEndpointResource(suite.TestCustomEndpoint), "expects the correct EndpointResource")
+}
+
+func (suite *HyperdriveTestSuite) TestNewEndpointResourceParam() {
+	suite.Equal(suite.TestEndpointResourceParam, NewEndpointResourceParam(suite.TestParsedParamCustom), "expects the correct EndpointResource")
+}
+
 func (suite *HyperdriveTestSuite) TestRootResourceServeHTTP() {
 	suite.Implements((*http.Handler)(nil), suite.TestRoot, "return an implementation of http.Handler")
 }
