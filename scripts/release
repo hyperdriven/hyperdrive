@@ -17,3 +17,5 @@ rm -f .git/RELEASE_EDITMSG
 touch .git/RELEASE_EDITMSG
 echo "${1}\n\n${2}" >> .git/RELEASE_EDITMSG
 hub release create -f .git/RELEASE_EDITMSG ${1}
+
+# vim: set filetype=sh
